@@ -11,7 +11,8 @@ class ExpensesModel extends Model {
 	}
 
 	public function addExpense($expense) {
-		$random_expense = rand();
-		$this->mysqli->query("INSERT INTO t_expenses(description, amount) VALUES('$expense', $random_expense)");
+		$description = $expense['description'];
+		$amount = $expense['amount'];
+		$this->mysqli->query("INSERT INTO t_expenses(description, amount) VALUES('$description', $amount)");
 	}
 }

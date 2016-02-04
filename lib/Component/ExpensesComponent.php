@@ -27,7 +27,16 @@ class ExpensesComponent extends ContainerComponent {
 
 	public function readAddedExpense() {
 		$inputComponent = $this->getChildByName('add_expense');
-		return $inputComponent->receive();
+		$description = $inputComponent->receive();
+		$amountComponent = $this->getChildByName('add_expense_amount');
+		$amount = $amountComponent->receive();
+		if ($amount && $description) {
+			return array(
+				'description' => $description,
+				'amount'	  => $amount
+			);
+		}
+		return false;
 	}
 
 	private function getExpensesFormComponent() {
@@ -36,6 +45,10 @@ class ExpensesComponent extends ContainerComponent {
 		$textInput->setName("add_expense");
 		$textInput->setLabel("Add an expense");
 		$form->addChild($textInput);
+		$amountInput = ComponentFactory::getComponent(TextInput::class);
+		$amountInput->setName("add_expense_amount");
+		$amountInput->setLabel("Add amount");
+		$form->addChild($amountInput);
 		return $form;
 	}
 
