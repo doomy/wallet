@@ -11,6 +11,7 @@ namespace Component;
 use Component\ExpensesTable;
 use Component\Form;
 use Component\Input\TextInput;
+use Component\Input\Number;
 
 class ExpensesComponent extends ContainerComponent {
 	public function __construct() {
@@ -45,7 +46,7 @@ class ExpensesComponent extends ContainerComponent {
 		$textInput->setName("add_expense");
 		$textInput->setLabel("Add an expense");
 		$form->addChild($textInput);
-		$amountInput = ComponentFactory::getComponent(TextInput::class);
+		$amountInput = ComponentFactory::getComponent(Number::class);
 		$amountInput->setName("add_expense_amount");
 		$amountInput->setLabel("Add amount");
 		$form->addChild($amountInput);
