@@ -4,7 +4,7 @@ require 'bootstrap.php';
 
 use app\Wallet;
 
-set_time_limit(0);
+set_time_limit(3);
 
 $wallet = new Wallet();
 if (isset($argv)) {
