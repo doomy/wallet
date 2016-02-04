@@ -7,16 +7,20 @@ use Component\ExpensesComponent;
 use Environment;
 
 class ExpensesModule {
-	public function getExpensesComponent() {
-		$expensesComponent = ComponentFactory::getComponent(ExpensesComponent::class);
+	private $component;
+
+	public function run() {
+		$this->component = ComponentFactory::getComponent(ExpensesComponent::class);
 		$model = $this->getModel();
-		$added_expense = $expensesComponent->readAddedExpense();
+		$added_expense = $this->component->readAddedExpense();
 		if ($added_expense) {
 			$model->addExpense($added_expense);
 		}
-		$expensesComponent->populateExpensesTable($model->getExpenses());
+		$this->component->populateExpensesTable($model->getExpenses());
+	}
 
-		return $expensesComponent;
+	public function getComponent() {
+		return $this->component;
 	}
 
 	private function getModel() {

@@ -8,7 +8,8 @@ use Module\ExpensesModule;
 class Wallet extends Controller {
 	public function run() {
 		$expensesModule = new ExpensesModule();
-		$this->presenter->addChild($expensesModule->getExpensesComponent());
+		$expensesModule->run();
+		$this->presenter->addChild($expensesModule->getComponent());
 		echo $this->presenter->render();
 	}
 }
