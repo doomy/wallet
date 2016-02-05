@@ -1,0 +1,1 @@
+ALTER TABLE t_expenses ADD date_added DATETIME NOT NULL;
