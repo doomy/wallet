@@ -13,7 +13,8 @@ class ExpensesModel extends Model {
 	public function addExpense($expense) {
 		$description = $expense['description'];
 		$amount = $expense['amount'];
-		$this->mysqli->query("INSERT INTO t_expenses(description, amount, date_added) VALUES('$description', $amount, NOW())");
+		$necessary = $expense['necessary'];
+		$this->mysqli->query("INSERT INTO t_expenses(description, amount, date_added, mandatory) VALUES('$description', $amount, NOW(), $necessary)");
 	}
 
 	public function getExpensesSum() {

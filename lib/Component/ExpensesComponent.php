@@ -12,6 +12,7 @@ use Component\ExpensesTable;
 use Component\Form;
 use Component\Input\TextInput;
 use Component\Input\Number;
+use Component\Input\Checkbox;
 use Component\Text as TextComponent;
 
 class ExpensesComponent extends ContainerComponent {
@@ -33,10 +34,13 @@ class ExpensesComponent extends ContainerComponent {
 		$description = $inputComponent->receive();
 		$amountComponent = $this->getChildByName('add_expense_amount');
 		$amount = $amountComponent->receive();
+		$necessaryCbComponent = $this->getChildByName("cbNecessary");
+		$necessary = $necessaryCbComponent->receive() ? 1 : 0;
 		if ($amount && $description) {
 			return array(
 				'description' => $description,
-				'amount'	  => $amount
+				'amount'	  => $amount,
+				'necessary'   => $necessary
 			);
 		}
 		return false;
@@ -57,6 +61,10 @@ class ExpensesComponent extends ContainerComponent {
 		$amountInput->setName("add_expense_amount");
 		$amountInput->setLabel("Add amount");
 		$form->addChild($amountInput);
+		$checkboxInput = ComponentFactory::getComponent(Checkbox::class);
+		$checkboxInput->setName("cbNecessary");
+		$checkboxInput->setLabel("Is necessary?");
+		$form->addChild($checkboxInput);
 		return $form;
 	}
 
