@@ -9,6 +9,9 @@
 		<th>
 			Date added
 		</th>
+		<th>
+			Necessary
+		</th>
     </tr>
 
     <<<foreach|$expenses|$expense>>>
@@ -16,6 +19,7 @@
 			<td>$$expense->description$$</td>
 			<td>$$expense->amount$$</td>
 			<td>$$expense->date_added$$</td>
+			<td>$$expense->mandatory$$</td>
 		</tr>
 	<<</foreach>>>
 </table>

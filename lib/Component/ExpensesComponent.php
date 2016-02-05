@@ -12,12 +12,14 @@ use Component\ExpensesTable;
 use Component\Form;
 use Component\Input\TextInput;
 use Component\Input\Number;
+use Component\Text as TextComponent;
 
 class ExpensesComponent extends ContainerComponent {
 	public function __construct() {
 		parent::__construct();
 		$this->addChild(ComponentFactory::getComponent(ExpensesTable::class));
 		$this->addChild($this->getExpensesFormComponent());
+		$this->addChild($this->getTotalAmountComponent());
 	}
 
 	public function populateExpensesTable($expenses) {
@@ -40,6 +42,11 @@ class ExpensesComponent extends ContainerComponent {
 		return false;
 	}
 
+	public function setTotalAmount($amount) {
+		$amountComponent = $this->getChildByName('totalAmount');
+		$amountComponent->setText("Expenses total: $amount");
+	}
+
 	private function getExpensesFormComponent() {
 		$form = ComponentFactory::getComponent(Form::class);
 		$textInput = ComponentFactory::getComponent(TextInput::class);
@@ -53,4 +60,9 @@ class ExpensesComponent extends ContainerComponent {
 		return $form;
 	}
 
-} 
+	private function getTotalAmountComponent() {
+		$textComponent = (ComponentFactory::getComponent(TextComponent::class));
+		$textComponent->setName('totalAmount');
+		return $textComponent;
+	}
+}

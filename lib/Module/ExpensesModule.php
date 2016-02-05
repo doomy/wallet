@@ -17,6 +17,7 @@ class ExpensesModule {
 			$model->addExpense($added_expense);
 		}
 		$this->component->populateExpensesTable($model->getExpenses());
+		$this->component->setTotalAmount($model->getExpensesSum());
 	}
 
 	public function getComponent() {

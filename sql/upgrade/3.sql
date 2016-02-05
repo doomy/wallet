@@ -1,0 +1,1 @@
+ALTER TABLE t_expenses ADD mandatory BOOLEAN DEFAULT 0;
