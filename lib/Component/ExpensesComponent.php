@@ -14,12 +14,17 @@ use Component\Input\TextInput;
 use Component\Input\Number;
 use Component\Input\Checkbox;
 use Component\Text as TextComponent;
+use Component\Popup;
 
 class ExpensesComponent extends ContainerComponent {
 	public function __construct() {
 		parent::__construct();
 		$this->addChild(ComponentFactory::getComponent(ExpensesTable::class));
-		$this->addChild($this->getExpensesFormComponent());
+        $popup = ComponentFactory::getComponent(Popup::class);
+        $form = $this->getExpensesFormComponent();
+        $popup->addChild($form);
+		$this->addChild($popup);
+
 		$this->addChild($this->getTotalAmountComponent());
 	}
 

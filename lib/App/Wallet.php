@@ -10,6 +10,7 @@ class Wallet extends Controller {
 		$expensesModule = new ExpensesModule();
 		$expensesModule->run();
 		$this->presenter->addChild($expensesModule->getComponent());
+		$this->presenter->addStylesheet('css/popup.css');
 		echo $this->presenter->render();
 	}
 }

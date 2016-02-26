@@ -2,7 +2,7 @@
 
 require 'bootstrap.php';
 
-use app\Wallet;
+use App\Wallet;
 
 set_time_limit(3);
 
