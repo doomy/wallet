@@ -11,6 +11,7 @@ class ExpensesModule {
 
 	public function run() {
 		$this->component = ComponentFactory::getComponent(FinOperationComponent::class);
+		$this->component->init();
 		$model = $this->getModel();
 		$added_expense = $this->component->readAddedOperation();
 		if ($added_expense) {

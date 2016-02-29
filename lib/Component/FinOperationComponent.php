@@ -17,14 +17,12 @@ use Component\Text as TextComponent;
 use Component\Popup;
 
 class FinOperationComponent extends ContainerComponent {
-	public function __construct() {
-		parent::__construct();
+	public function init() {
 		$this->addChild(ComponentFactory::getComponent(FinOperationTable::class));
         $popup = ComponentFactory::getComponent(Popup::class);
         $form = $this->getFinOperationFormComponent();
         $popup->addChild($form);
 		$this->addChild($popup);
-
 		$this->addChild($this->getTotalAmountComponent());
 	}
 
