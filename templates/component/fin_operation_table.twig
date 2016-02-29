@@ -14,12 +14,12 @@
 		</th>
     </tr>
 
-    <<<foreach|$operations|$operation>>>
+    {% for operation in operations %}
 		<tr>
-			<td>$$operation->description$$</td>
-			<td>$$operation->amount$$</td>
-			<td>$$operation->date_added$$</td>
-			<td>$$operation->mandatory$$</td>
+			<td>{{ operation.description }}</td>
+			<td>{{ operation.amount }}</td>
+			<td>{{ operation.date_added }}</td>
+			<td>{{ operation.mandatory }}</td>
 		</tr>
-	<<</foreach>>>
+	{%  endfor %}
 </table>
