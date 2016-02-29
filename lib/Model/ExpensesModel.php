@@ -6,7 +6,7 @@ use Base\Model;
 
 class ExpensesModel extends Model {
 	public function getExpenses() {
-		$result = $this->mysqli->query("SELECT description, amount, date_added, mandatory FROM t_expenses LIMIT 15");
+		$result = $this->mysqli->query("SELECT description, amount, date_added, mandatory FROM t_expenses ORDER BY id DESC LIMIT 15");
 		return $result->fetch_all(MYSQLI_ASSOC);
 	}
 
