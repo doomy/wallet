@@ -8,7 +8,7 @@
 
 namespace Component;
 
-use Component\ExpensesTable;
+use Component\FinOperationTable;
 use Component\Form;
 use Component\Input\TextInput;
 use Component\Input\Number;
@@ -16,28 +16,28 @@ use Component\Input\Checkbox;
 use Component\Text as TextComponent;
 use Component\Popup;
 
-class ExpensesComponent extends ContainerComponent {
+class FinOperationComponent extends ContainerComponent {
 	public function __construct() {
 		parent::__construct();
-		$this->addChild(ComponentFactory::getComponent(ExpensesTable::class));
+		$this->addChild(ComponentFactory::getComponent(FinOperationTable::class));
         $popup = ComponentFactory::getComponent(Popup::class);
-        $form = $this->getExpensesFormComponent();
+        $form = $this->getFinOperationFormComponent();
         $popup->addChild($form);
 		$this->addChild($popup);
 
 		$this->addChild($this->getTotalAmountComponent());
 	}
 
-	public function populateExpensesTable($expenses) {
-		$expensesTables = $this->getChildrenByClass(ExpensesTable::class);
-		$expensesTable = $expensesTables[0];
-		$expensesTable->setExpenses($expenses);
+	public function populateFinOperationTable($operations) {
+		$operationTables = $this->getChildrenByClass(FinOperationTable::class);
+		$operationTable = $operationTables[0];
+		$operationTable->setOperations($operations);
 	}
 
-	public function readAddedExpense() {
-		$inputComponent = $this->getChildByName('add_expense');
+	public function readAddedOperation() {
+		$inputComponent = $this->getChildByName('add_fin_operation');
 		$description = $inputComponent->receive();
-		$amountComponent = $this->getChildByName('add_expense_amount');
+		$amountComponent = $this->getChildByName('add_fin_operation_amount');
 		$amount = $amountComponent->receive();
 		$necessaryCbComponent = $this->getChildByName("cbNecessary");
 		$necessary = $necessaryCbComponent->receive() ? 1 : 0;
@@ -53,17 +53,17 @@ class ExpensesComponent extends ContainerComponent {
 
 	public function setTotalAmount($amount) {
 		$amountComponent = $this->getChildByName('totalAmount');
-		$amountComponent->setText("Expenses total: $amount");
+		$amountComponent->setText("Total: $amount");
 	}
 
-	private function getExpensesFormComponent() {
+	private function getFinOperationFormComponent() {
 		$form = ComponentFactory::getComponent(Form::class);
 		$textInput = ComponentFactory::getComponent(TextInput::class);
-		$textInput->setName("add_expense");
-		$textInput->setLabel("Add an expense");
+		$textInput->setName("add_fin_operation");
+		$textInput->setLabel("Add operation");
 		$form->addChild($textInput);
 		$amountInput = ComponentFactory::getComponent(Number::class);
-		$amountInput->setName("add_expense_amount");
+		$amountInput->setName("add_fin_operation_amount");
 		$amountInput->setLabel("Add amount");
 		$form->addChild($amountInput);
 		$checkboxInput = ComponentFactory::getComponent(Checkbox::class);

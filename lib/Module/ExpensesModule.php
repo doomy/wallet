@@ -3,20 +3,20 @@ namespace Module;
 
 use Model\ExpensesModel;
 use Component\ComponentFactory;
-use Component\ExpensesComponent;
+use Component\FinOperationComponent;
 use Environment;
 
 class ExpensesModule {
 	private $component;
 
 	public function run() {
-		$this->component = ComponentFactory::getComponent(ExpensesComponent::class);
+		$this->component = ComponentFactory::getComponent(FinOperationComponent::class);
 		$model = $this->getModel();
-		$added_expense = $this->component->readAddedExpense();
+		$added_expense = $this->component->readAddedOperation();
 		if ($added_expense) {
 			$model->addExpense($added_expense);
 		}
-		$this->component->populateExpensesTable($model->getExpenses());
+		$this->component->populateFinOperationTable($model->getExpenses());
 		$this->component->setTotalAmount($model->getExpensesSum());
 	}
 
