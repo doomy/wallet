@@ -19,6 +19,7 @@ class ExpensesModule {
 		}
 		$this->component->populateFinOperationTable($model->getExpenses());
 		$this->component->setTotalAmount($model->getExpensesSum());
+		$this->component->setTitle("Expenses");
 	}
 
 	public function getComponent() {
