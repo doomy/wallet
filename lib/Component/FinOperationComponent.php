@@ -8,7 +8,7 @@
 
 namespace Component;
 
-use Component\FinOperationTable;
+use Component\Table;
 use Component\Form;
 use Component\Input\TextInput;
 use Component\Input\Number;
@@ -17,8 +17,9 @@ use Component\Text as TextComponent;
 use Component\Popup;
 
 class FinOperationComponent extends ContainerComponent {
+
 	public function init() {
-		$this->addChild(ComponentFactory::getComponent(FinOperationTable::class));
+		$this->addChild(ComponentFactory::getComponent(Table::class));
         $popup = ComponentFactory::getComponent(Popup::class);
         $form = $this->getFinOperationFormComponent();
         $popup->addChild($form);
@@ -27,9 +28,9 @@ class FinOperationComponent extends ContainerComponent {
 	}
 
 	public function populateFinOperationTable($operations) {
-		$operationTables = $this->getChildrenByClass(FinOperationTable::class);
+		$operationTables = $this->getChildrenByClass(Table::class);
 		$operationTable = $operationTables[0];
-		$operationTable->setOperations($operations);
+		$operationTable->setData($operations);
 	}
 
 	public function readAddedOperation() {
