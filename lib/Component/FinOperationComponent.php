@@ -17,6 +17,7 @@ use Component\Text as TextComponent;
 use Component\Popup;
 
 class FinOperationComponent extends ContainerComponent {
+	private $supportNecessaryFlag = false;
 
 	public function init() {
 		$this->addChild(ComponentFactory::getComponent(Table::class));
@@ -38,14 +39,17 @@ class FinOperationComponent extends ContainerComponent {
 		$description = $inputComponent->receive();
 		$amountComponent = $this->getChildByName('add_fin_operation_amount');
 		$amount = $amountComponent->receive();
-		$necessaryCbComponent = $this->getChildByName("cbNecessary");
-		$necessary = $necessaryCbComponent->receive() ? 1 : 0;
 		if ($amount && $description) {
-			return array(
+			$result = array(
 				'description' => $description,
-				'amount'	  => $amount,
-				'necessary'   => $necessary
+				'amount'	  => $amount
 			);
+			if ($this->supportNecessaryFlag) {
+				$necessaryCbComponent = $this->getChildByName("cbNecessary");
+				$result['necessary'] = $necessaryCbComponent->receive() ? 1 : 0;
+			}
+
+			return $result;
 		}
 		return false;
 	}
@@ -53,6 +57,10 @@ class FinOperationComponent extends ContainerComponent {
 	public function setTotalAmount($amount) {
 		$amountComponent = $this->getChildByName('totalAmount');
 		$amountComponent->setText("Total: $amount");
+	}
+
+	public function setNecessaryFlagSupport($support) {
+		$this->supportNecessaryFlag = $support;
 	}
 
 	private function getFinOperationFormComponent() {
@@ -65,10 +73,13 @@ class FinOperationComponent extends ContainerComponent {
 		$amountInput->setName("add_fin_operation_amount");
 		$amountInput->setLabel("Add amount");
 		$form->addChild($amountInput);
-		$checkboxInput = ComponentFactory::getComponent(Checkbox::class);
-		$checkboxInput->setName("cbNecessary");
-		$checkboxInput->setLabel("Is necessary?");
-		$form->addChild($checkboxInput);
+		if ($this->supportNecessaryFlag) {
+			$checkboxInput = ComponentFactory::getComponent(Checkbox::class);
+			$checkboxInput->setName("cbNecessary");
+			$checkboxInput->setLabel("Is necessary?");
+			$form->addChild($checkboxInput);
+		}
+
 		return $form;
 	}
 
