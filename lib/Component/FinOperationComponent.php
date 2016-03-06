@@ -35,9 +35,9 @@ class FinOperationComponent extends ContainerComponent {
 	}
 
 	public function readAddedOperation() {
-		$inputComponent = $this->getChildByName('add_fin_operation');
+		$inputComponent = $this->getChildByName($this->name . 'add_fin_operation');
 		$description = $inputComponent->receive();
-		$amountComponent = $this->getChildByName('add_fin_operation_amount');
+		$amountComponent = $this->getChildByName($this->name . 'add_fin_operation_amount');
 		$amount = $amountComponent->receive();
 		if ($amount && $description) {
 			$result = array(
@@ -45,7 +45,7 @@ class FinOperationComponent extends ContainerComponent {
 				'amount'	  => $amount
 			);
 			if ($this->supportNecessaryFlag) {
-				$necessaryCbComponent = $this->getChildByName("cbNecessary");
+				$necessaryCbComponent = $this->getChildByName($this->name . "cbNecessary");
 				$result['necessary'] = $necessaryCbComponent->receive() ? 1 : 0;
 			}
 
@@ -55,7 +55,7 @@ class FinOperationComponent extends ContainerComponent {
 	}
 
 	public function setTotalAmount($amount) {
-		$amountComponent = $this->getChildByName('totalAmount');
+		$amountComponent = $this->getChildByName($this->name . 'totalAmount');
 		$amountComponent->setText("Total: $amount");
 	}
 
@@ -66,16 +66,16 @@ class FinOperationComponent extends ContainerComponent {
 	private function getFinOperationFormComponent() {
 		$form = ComponentFactory::getComponent(Form::class);
 		$textInput = ComponentFactory::getComponent(TextInput::class);
-		$textInput->setName("add_fin_operation");
+		$textInput->setName($this->name . "add_fin_operation");
 		$textInput->setLabel("Add operation");
 		$form->addChild($textInput);
 		$amountInput = ComponentFactory::getComponent(Number::class);
-		$amountInput->setName("add_fin_operation_amount");
+		$amountInput->setName($this->name . "add_fin_operation_amount");
 		$amountInput->setLabel("Add amount");
 		$form->addChild($amountInput);
 		if ($this->supportNecessaryFlag) {
 			$checkboxInput = ComponentFactory::getComponent(Checkbox::class);
-			$checkboxInput->setName("cbNecessary");
+			$checkboxInput->setName($this->name . "cbNecessary");
 			$checkboxInput->setLabel("Is necessary?");
 			$form->addChild($checkboxInput);
 		}
@@ -85,7 +85,7 @@ class FinOperationComponent extends ContainerComponent {
 
 	private function getTotalAmountComponent() {
 		$textComponent = (ComponentFactory::getComponent(TextComponent::class));
-		$textComponent->setName('totalAmount');
+		$textComponent->setName($this->name . 'totalAmount');
 		return $textComponent;
 	}
 }

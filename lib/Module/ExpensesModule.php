@@ -12,6 +12,7 @@ class ExpensesModule {
 	public function run() {
 		$this->component = ComponentFactory::getComponent(FinOperationComponent::class);
 		$this->component->setNecessaryFlagSupport(true);
+		$this->component->setName('expensesComponent');
 		$this->component->init();
 		$model = $this->getModel();
 		$added_expense = $this->component->readAddedOperation();
