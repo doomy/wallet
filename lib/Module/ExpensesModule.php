@@ -21,6 +21,7 @@ class ExpensesModule {
 		}
 		$this->component->populateFinOperationTable($model->getExpenses());
 		$this->component->setTotalAmount($model->getExpensesSum());
+		$this->component->setDailyAvg($model->getDailyAverage());
 		$this->component->setTitle("Expenses");
 	}
 

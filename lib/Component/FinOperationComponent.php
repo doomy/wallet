@@ -28,6 +28,7 @@ class FinOperationComponent extends ContainerComponent {
         $popup->addChild($form);
 		$this->addChild($popup);
 		$this->addChild($this->getTotalAmountComponent());
+		$this->addChild($this->getDailyAvgComponent());
 	}
 
 	public function populateFinOperationTable($operations) {
@@ -61,6 +62,11 @@ class FinOperationComponent extends ContainerComponent {
 		$amountComponent->setText("Total: $amount");
 	}
 
+	public function setDailyAvg($amount) {
+		$amountComponent = $this->getChildByName($this->name . 'dailyAvg');
+		$amountComponent->setText("Daily AVG: $amount");
+	}
+
 	public function setNecessaryFlagSupport($support) {
 		$this->supportNecessaryFlag = $support;
 	}
@@ -88,6 +94,12 @@ class FinOperationComponent extends ContainerComponent {
 	private function getTotalAmountComponent() {
 		$textComponent = (ComponentFactory::getComponent(TextComponent::class));
 		$textComponent->setName($this->name . 'totalAmount');
+		return $textComponent;
+	}
+
+	private function getDailyAvgComponent() {
+		$textComponent = (ComponentFactory::getComponent(TextComponent::class));
+		$textComponent->setName($this->name . 'dailyAvg');
 		return $textComponent;
 	}
 }

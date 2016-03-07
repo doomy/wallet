@@ -21,4 +21,13 @@ class IncomeModel extends Model {
 		$obj = $result->fetch_object();
 		return $obj->sumAmount;
 	}
+
+	public function getDailyAverage() {
+		$result = $this->mysqli->query("
+			SELECT AVG(daily_amount) avgDailyAmount FROM (
+				SELECT DATE(date_added) added_date, SUM(amount) daily_amount FROM t_income GROUP BY added_date
+			) avg_select;");
+		$obj = $result->fetch_object();
+		return $obj->avgDailyAmount;
+	}
 }

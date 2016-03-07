@@ -21,6 +21,7 @@ class IncomeModule {
 		}
 		$this->component->populateFinOperationTable($model->getIncome());
 		$this->component->setTotalAmount($model->getIncomeSum());
+		$this->component->setDailyAvg($model->getDailyAverage());
 		$this->component->setTitle("Income");
 	}
 
