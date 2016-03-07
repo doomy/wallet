@@ -12,6 +12,7 @@ class TracedDateModel extends Model {
 	}
 
 	public function insertDate($date) {
-		$this->mysqli->query("INSERT INTO t_traced_date (traced_date) VALUES '$date';");
+		$sql = "INSERT INTO t_traced_date (traced_date) VALUES ('$date');";
+		$this->mysqli->query($sql);
 	}
 }

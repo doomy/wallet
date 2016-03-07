@@ -22,16 +22,15 @@ class Wallet extends Controller {
 
 	private function updateTracedDates() {
 		$model = new TracedDateModel(\Environment::get_dbh()->get_mysqli_connection());
-		do {
-			$lastDate = $model->getLastDate();
-			$currentDate = new \DateTime();
-			if ($currentDate->format('Y-m-d') != $lastDate) {
-				$currentDate->add();
-				var_dump($currentDate->format('Y-m-d'));
-			}
 
-			die;
-
-		} while (1 == 2);
+		$lastDateStr = $model->getLastDate();
+		$currentDate = new \DateTime();
+		$currentDateStr = $currentDate->format('Y-m-d');
+		while ($lastDateStr != $currentDateStr)  {
+			$lastDate = new \DateTime($lastDateStr);
+			$lastDate->add(\DateInterval::createFromDateString("1 day"));
+			$lastDateStr = $lastDate->format('Y-m-d');
+			$model->insertDate($lastDateStr);
+		}
 	}
 }
