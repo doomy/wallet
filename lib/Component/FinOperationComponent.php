@@ -22,6 +22,7 @@ class FinOperationComponent extends ContainerComponent {
 	public function init() {
 		$this->addChild(ComponentFactory::getComponent(Table::class));
         $popup = ComponentFactory::getComponent(Popup::class);
+		$popup->setName($this->name . 'Popup');
         $form = $this->getFinOperationFormComponent();
         $popup->addChild($form);
 		$this->addChild($popup);
