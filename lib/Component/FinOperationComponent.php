@@ -20,6 +20,7 @@ class FinOperationComponent extends ContainerComponent {
 	private $supportNecessaryFlag = false;
 
 	public function init() {
+		$this->setHtmlClass('float-left');
 		$this->addChild(ComponentFactory::getComponent(Table::class));
         $popup = ComponentFactory::getComponent(Popup::class);
 		$popup->setName($this->name . 'Popup');
