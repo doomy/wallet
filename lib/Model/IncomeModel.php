@@ -17,7 +17,7 @@ class IncomeModel extends Model {
 	}
 
 	public function getIncomeSum() {
-		$result = $this->mysqli->query("SELECT SUM(amount) sumAmount FROM t_expenses");
+		$result = $this->mysqli->query("SELECT SUM(amount) sumAmount FROM t_income");
 		$obj = $result->fetch_object();
 		return $obj->sumAmount;
 	}
