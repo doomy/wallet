@@ -25,9 +25,11 @@ class ExpensesModel extends Model {
 
 	public function getDailyAverage() {
 		$result = $this->mysqli->query("
-			SELECT AVG(daily_amount) avgDailyAmount FROM (
-				SELECT DATE(date_added) added_date, SUM(amount) daily_amount FROM t_expenses GROUP BY added_date
-			) avg_select;");
+			SELECT AVG(amount_sum) AS avgDailyAmount FROM (
+				SELECT COALESCE(SUM(e.amount), 0) amount_sum, td.traced_date
+				FROM t_expenses e
+				RIGHT JOIN t_traced_date td  ON (DATE(e.date_added) = td.traced_date)
+				GROUP BY td.traced_date) daily_sum;");
 		$obj = $result->fetch_object();
 		return $obj->avgDailyAmount;
 	}
