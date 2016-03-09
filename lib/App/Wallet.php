@@ -6,11 +6,12 @@ use Base\Controller;
 use Module\ExpensesModule;
 use Module\IncomeModule;
 use Module\SummaryModule;
-use Model\TracedDateModel;
+use Module\TracedDatesModule;
 
 class Wallet extends Controller {
 	public function run() {
-		$this->updateTracedDates();
+		$tracedDatesModule = new TracedDatesModule();
+		$tracedDatesModule->updateTracedDates();
 		$summaryModule = new SummaryModule();
 		$this->presenter->addChild($summaryModule->getComponent());
 		$expensesModule = new ExpensesModule();
@@ -24,17 +25,5 @@ class Wallet extends Controller {
 		echo $this->presenter->render();
 	}
 
-	private function updateTracedDates() {
-		$model = new TracedDateModel(\Environment::get_dbh()->get_mysqli_connection());
 
-		$lastDateStr = $model->getLastDate();
-		$currentDate = new \DateTime();
-		$currentDateStr = $currentDate->format('Y-m-d');
-		while ($lastDateStr != $currentDateStr)  {
-			$lastDate = new \DateTime($lastDateStr);
-			$lastDate->add(\DateInterval::createFromDateString("1 day"));
-			$lastDateStr = $lastDate->format('Y-m-d');
-			$model->insertDate($lastDateStr);
-		}
-	}
 }
